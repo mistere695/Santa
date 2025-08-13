@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recrutement Santa Lucia</title>
+<style>
+body {margin:0; font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #007bff, #ff69b4, #ffd700); display:flex; justify-content:center; align-items:center; min-height:100vh; animation:gradientBG 10s ease infinite;}
+@keyframes gradientBG {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+.container {background-color: rgba(255,255,255,0.95); padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); width:500px; text-align:center; animation:fadeIn 1s ease forwards;}
+@keyframes fadeIn {0%{opacity:0; transform:translateY(-20px);}100%{opacity:1; transform:translateY(0);}}
+img.logo {width:150px;margin-bottom:20px;}
+h2 {color:#007bff;text-shadow:1px 1px #ff69b4;}
+input, select, button {width:100%; padding:12px;margin:8px 0 15px 0; border-radius:10px; border:1px solid #ccc; font-size:16px; transition:0.3s;}
+input:focus, select:focus {border-color:#007bff; box-shadow:0 0 5px rgba(0,123,255,0.5); outline:none;}
+button {background-color:#ff69b4;color:white;border:none; cursor:pointer; font-weight:bold;font-size:18px; transition:0.3s;}
+button:hover {background-color:#ff1493; transform:scale(1.05);}
+.checkbox-group {text-align:left; margin-bottom:15px;}
+.checkbox-group input {width:auto; margin-right:10px;}
+.stars {display:flex; justify-content:center; margin-bottom:20px;}
+.stars input[type="radio"] {display:none;}
+.stars label {font-size:30px;color:#ccc; cursor:pointer; transition:0.3s;}
+.stars input[type="radio"]:checked ~ label, .stars label:hover, .stars label:hover ~ label {color:#ffd700;}
+.confirmation {font-size:18px; color:#007bff; text-align:left;}
+</style>
+</head>
+<body>
+<div class="container">
+    <img src="logo-santa-lucia.png" alt="Logo Santa Lucia" class="logo">
+    <h2>Postulez chez Santa Lucia</h2>
+
+    <form id="recruitmentForm" name="recruitment" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="recruitment">
+        <input type="text" name="prenom" placeholder="Votre prénom" required>
+        <input type="text" name="nom" placeholder="Votre nom" required>
+        <input type="email" name="email" placeholder="Votre email" required>
+        <input type="tel" name="telephone" placeholder="Votre numéro de téléphone" required>
+        <input type="number" name="age" placeholder="Votre âge" min="16" max="65" required>
+        <select name="sexe" required>
+            <option value="">Votre sexe</option>
+            <option value="Homme">Homme</option>
+            <option value="Femme">Femme</option>
+            <option value="Autre">Autre</option>
+        </select>
+        <input type="text" name="quartier" placeholder="Votre quartier de résidence" required>
+
+        <select name="poste" id="poste" required>
+            <option value="">Choisissez un poste</option>
+            <option value="Caissier (70 000 FCFA)">Caissier (70 000 FCFA)</option>
+            <option value="Vendeur (80 000 FCFA)">Vendeur (80 000 FCFA)</option>
+            <option value="Préparateur de commandes (90 000 FCFA)">Préparateur de commandes (90 000 FCFA)</option>
+            <option value="Chef de rayon (100 000 FCFA)">Chef de rayon (100 000 FCFA)</option>
+            <option value="Responsable logistique (110 000 FCFA)">Responsable logistique (110 000 FCFA)</option>
+            <option value="Responsable stock (100 000 FCFA)">Responsable stock (100 000 FCFA)</option>
+            <option value="Responsable qualité (110 000 FCFA)">Responsable qualité (110 000 FCFA)</option>
+            <option value="Assistant gérant (90 000 FCFA)">Assistant gérant (90 000 FCFA)</option>
+        </select>
+
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="experience" value="oui"> Avez-vous déjà travaillé dans un supermarché ?</label><br>
+            <label><input type="checkbox" name="client" value="oui"> Faites-vous souvent des achats chez Santa Lucia ?</label>
+        </div>
+
+        <div class="stars">
+            <input type="radio" name="note" id="star5" value="5"><label for="star5">&#9733;</label>
+            <input type="radio" name="note" id="star4" value="4"><label for="star4">&#9733;</label>
+            <input type="radio" name="note" id="star3" value="3"><label for="star3">&#9733;</label>
+            <input type="radio" name="note" id="star2" value="2"><label for="star2">&#9733;</label>
+            <input type="radio" name="note" id="star1" value="1"><label for="star1">&#9733;</label>
+        </div>
+
+        <button type="submit">Soumettre</button>
+    </form>
+
+    <div id="confirmation" class="confirmation" style="display:none;"></div>
+</div>
+
+<script>
+const form = document.getElementById('recruitmentForm');
+const confirmation = document.getElementById('confirmation');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const prenom = data.get('prenom');
+    const nom = data.get('nom');
+    const posteFull = data.get('poste');
+    const poste = posteFull.split('(')[0].trim();
+
+    confirmation.innerHTML = `<h2>Félicitations ${prenom} ${nom} !</h2>
+    Vous avez été enregistré avec succès au poste de <strong>${poste}</strong> chez Santa Lucia.<br><br>
+    Vous devez à présent payer les frais de traitement de dossier qui s’élèvent à <strong>3 100 FCFA</strong>.<br>
+    Veuillez nous envoyer une photo recto/verso de votre CNI et votre CV sur <strong>WhatsApp</strong>.`;
+
+    form.style.display = 'none';
+    confirmation.style.display = 'block';
+
+    // Envoi réel à Netlify
+    fetch('/', { method: 'POST', body: new URLSearchParams(data) });
+});
+</script>
+</body>
+</html>
