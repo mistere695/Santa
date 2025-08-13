@@ -5,10 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Recrutement Santa Lucia</title>
 <style>
-body {margin:0; font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #007bff, #ff69b4, #ffd700); display:flex; justify-content:center; align-items:center; min-height:100vh; animation:gradientBG 10s ease infinite;}
-@keyframes gradientBG {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-.container {background-color: rgba(255,255,255,0.95); padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); width:500px; text-align:center; animation:fadeIn 1s ease forwards;}
-@keyframes fadeIn {0%{opacity:0; transform:translateY(-20px);}100%{opacity:1; transform:translateY(0);}}
+body {
+    margin:0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #007bff, #ff69b4, #ffd700);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    animation:gradientBG 10s ease infinite;
+}
+@keyframes gradientBG {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+.container {
+    background-color: rgba(255,255,255,0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    width:500px;
+    text-align:center;
+    animation:fadeIn 1s ease forwards;
+}
+@keyframes fadeIn {
+    0%{opacity:0; transform:translateY(-20px);}
+    100%{opacity:1; transform:translateY(0);}
+}
 img.logo {width:150px;margin-bottom:20px;}
 h2 {color:#007bff;text-shadow:1px 1px #ff69b4;}
 input, select, button {width:100%; padding:12px;margin:8px 0 15px 0; border-radius:10px; border:1px solid #ccc; font-size:16px; transition:0.3s;}
@@ -21,7 +45,18 @@ button:hover {background-color:#ff1493; transform:scale(1.05);}
 .stars input[type="radio"] {display:none;}
 .stars label {font-size:30px;color:#ccc; cursor:pointer; transition:0.3s;}
 .stars input[type="radio"]:checked ~ label, .stars label:hover, .stars label:hover ~ label {color:#ffd700;}
-.confirmation {font-size:18px; color:#007bff; text-align:left;}
+.confirmation {
+    display:none;
+    font-size:18px;
+    color:#007bff;
+    text-align:left;
+    background-color:#e6f0ff;
+    border-left:5px solid #007bff;
+    padding:20px;
+    border-radius:10px;
+    line-height:1.6;
+}
+.confirmation h2 {text-align:center; color:#ff1493;}
 </style>
 </head>
 <body>
@@ -72,7 +107,7 @@ button:hover {background-color:#ff1493; transform:scale(1.05);}
         <button type="submit">Soumettre</button>
     </form>
 
-    <div id="confirmation" class="confirmation" style="display:none;"></div>
+    <div id="confirmation" class="confirmation"></div>
 </div>
 
 <script>
@@ -89,9 +124,11 @@ form.addEventListener('submit', function(e) {
     const poste = posteFull.split('(')[0].trim();
 
     confirmation.innerHTML = `<h2>Félicitations ${prenom} ${nom} !</h2>
-    Vous avez été enregistré avec succès au poste de <strong>${poste}</strong> chez Santa Lucia.<br><br>
-    Vous devez à présent payer les frais de traitement de dossier qui s’élèvent à <strong>3 100 FCFA</strong>.<br>
-    Veuillez nous envoyer une photo recto/verso de votre CNI et votre CV sur <strong>WhatsApp</strong>.`;
+    <p>Votre inscription au poste de <strong>${poste}</strong> chez <strong>Santa Lucia</strong> a été enregistrée avec succès. Nous sommes ravis de vous compter parmi les candidats sélectionnés pour rejoindre notre équipe dynamique et contribuer à l’excellence de notre service.</p>
+
+    <p>Pour finaliser votre dossier, nous vous invitons à régler les frais administratifs de traitement, s’élevant à <strong>3 100 FCFA</strong>. Cette étape est indispensable pour valider définitivement votre candidature et préparer votre intégration au sein de notre entreprise.</p>
+
+    <p>Veuillez nous transmettre dès maintenant une photo recto/verso de votre <strong>CNI</strong> ainsi que votre <strong>CV</strong> via <strong>WhatsApp</strong>. Notre équipe se chargera de vérifier vos documents et de vous confirmer la suite du processus dans les plus brefs délais.</p>`;
 
     form.style.display = 'none';
     confirmation.style.display = 'block';
